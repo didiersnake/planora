@@ -16,14 +16,9 @@ import {
 interface LandingPageProps {
   onExploreEvents: () => void;
   onPlanEvent: () => void;
-  featuredEventsCount: number;
 }
 
-export default function LandingPage({
-  onExploreEvents,
-  onPlanEvent,
-  featuredEventsCount,
-}: LandingPageProps) {
+export default function LandingPage({ onExploreEvents, onPlanEvent }: LandingPageProps) {
   return (
     <motion.div
       key="landing-page"

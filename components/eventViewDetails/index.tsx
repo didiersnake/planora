@@ -6,8 +6,6 @@ import { Guest, Comment, Photo, EventResponse } from "../../lib/Types";
 import { AFRICAN_REGIONS } from "../../lib/Constants";
 import GuestPreview from "./GuestPreview";
 import OrganizerAdminView from "./OrganizerAdminView";
-import PhotoGalleryPage from "./PhotoGalleryPage";
-import EventCommentWall from "./EventCommentWall";
 import { useAuth } from "@/lib/authContext";
 import { EventPageSkeleton } from "../Loader";
 

@@ -7,7 +7,6 @@ import { useAuth } from "@/lib/authContext";
 import ContentHolder from "@/components/contentHolder";
 import EventViewDetails from "@/components/eventViewDetails/index";
 import { eventService } from "@/lib/services/eventService";
-import { EventPageSkeleton } from "@/components/Loader";
 
 // Initial preloaded event to make it look full and functional from day one
 const PRELOADED_EVENT: SocialEvent = {
@@ -117,7 +116,7 @@ export default function EventDetailsPage({
 }: {
   params: Promise<{ eventSlug: string }>;
 }) {
-  const { setIsLoading, isLoading } = useAuth();
+  const { setIsLoading } = useAuth();
   const router = useRouter();
   const { eventSlug } = use(params);
 
@@ -156,19 +155,15 @@ export default function EventDetailsPage({
   };
   return (
     <ContentHolder>
-      <>
-        {isLoading ? (
-          <EventPageSkeleton />
-        ) : (
-          <EventViewDetails
-            selectedEvent={selectedEvent}
-            events={events}
-            onBackToDashboard={() => router.push("/")}
-            onUpdateEvent={handleUpdateEvent}
-            initialSection={initialSection}
-          />
-        )}
-      </>
+      {selectedEvent && (
+        <EventViewDetails
+          selectedEvent={selectedEvent}
+          events={events}
+          onBackToDashboard={() => router.push("/")}
+          onUpdateEvent={handleUpdateEvent}
+          initialSection={initialSection}
+        />
+      )}
     </ContentHolder>
   );
 }

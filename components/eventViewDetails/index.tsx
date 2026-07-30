@@ -156,122 +156,126 @@ export default function EventDetailsPageComponent({
 
   return (
     <>
-      <motion.div
-        key="event-view"
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -15 }}
-        transition={{ duration: 0.3 }}
-        className="space-y-6"
-        id="event_detail_workspace"
-      >
-        {/* Back to dashboard and view mode selectors */}
-        {expandedSection === "none" && (
-          <div
-            className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-neutral-200"
-            id="detail_nav_control"
-          >
-            <button
-              onClick={onBackToDashboard}
-              className="text-sm font-semibold text-neutral-600 hover:text-orange-600 flex items-center gap-1.5 transition-colors"
+      {isLoading ? (
+        <EventPageSkeleton />
+      ) : (
+        <motion.div
+          key="event-view"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -15 }}
+          transition={{ duration: 0.3 }}
+          className="space-y-6"
+          id="event_detail_workspace"
+        >
+          {/* Back to dashboard and view mode selectors */}
+          {expandedSection === "none" && (
+            <div
+              className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-neutral-200"
+              id="detail_nav_control"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to Dashboard</span>
-            </button>
+              <button
+                onClick={onBackToDashboard}
+                className="text-sm font-semibold text-neutral-600 hover:text-orange-600 flex items-center gap-1.5 transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Back to Dashboard</span>
+              </button>
 
-            {/* Simulated Viewer Selector (Highlights the zero-install guest flyer concept) */}
-            <div className="flex bg-neutral-100 p-1 rounded-xl border border-neutral-200 self-start sm:self-center">
-              <button
-                onClick={() => setViewMode("guest")}
-                className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold transition ${
-                  viewMode === "guest"
-                    ? "bg-orange-600 text-white shadow-xs"
-                    : "text-neutral-600 hover:text-neutral-900"
-                }`}
-              >
-                <Eye className="w-3.5 h-3.5" />
-                <span>Guest View (Flyer)</span>
-              </button>
-              <button
-                onClick={() => setViewMode("organizer")}
-                className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold transition ${
-                  viewMode === "organizer"
-                    ? "bg-orange-600 text-white shadow-xs"
-                    : "text-neutral-600 hover:text-neutral-900"
-                }`}
-              >
-                <Shield className="w-3.5 h-3.5" />
-                <span>Organizer Admin</span>
-              </button>
+              {/* Simulated Viewer Selector (Highlights the zero-install guest flyer concept) */}
+              <div className="flex bg-neutral-100 p-1 rounded-xl border border-neutral-200 self-start sm:self-center">
+                <button
+                  onClick={() => setViewMode("guest")}
+                  className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold transition ${
+                    viewMode === "guest"
+                      ? "bg-orange-600 text-white shadow-xs"
+                      : "text-neutral-600 hover:text-neutral-900"
+                  }`}
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                  <span>Guest View (Flyer)</span>
+                </button>
+                <button
+                  onClick={() => setViewMode("organizer")}
+                  className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold transition ${
+                    viewMode === "organizer"
+                      ? "bg-orange-600 text-white shadow-xs"
+                      : "text-neutral-600 hover:text-neutral-900"
+                  }`}
+                >
+                  <Shield className="w-3.5 h-3.5" />
+                  <span>Organizer Admin</span>
+                </button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* View layout */}
-        <AnimatePresence mode="wait">
-          {expandedSection === "wall" ? (
-            /* ========================================================
+          {/* View layout */}
+          <AnimatePresence mode="wait">
+            {expandedSection === "wall" ? (
+              /* ========================================================
              DEDICATED FULL-SCREEN EVENT WALL VIEW
              ======================================================== */
-            //   <EventCommentWall
-            //     setExpandedSection={setExpandedSection}
-            //     selectedEvent={selectedEvent}
-            //     handleAddComment={handleAddComment}
-            //     newComment={newComment}
-            //     setNewComment={setNewComment}
-            //     setShowGifSelector={setShowGifSelector}
-            //     setSelectedGif={setSelectedGif}
-            //     showGifSelector={showGifSelector}
-            //     selectedGif={selectedGif}
-            //   />
-            <></>
-          ) : expandedSection === "album" ? (
-            /* ========================================================
+              //   <EventCommentWall
+              //     setExpandedSection={setExpandedSection}
+              //     selectedEvent={selectedEvent}
+              //     handleAddComment={handleAddComment}
+              //     newComment={newComment}
+              //     setNewComment={setNewComment}
+              //     setShowGifSelector={setShowGifSelector}
+              //     setSelectedGif={setSelectedGif}
+              //     showGifSelector={showGifSelector}
+              //     selectedGif={selectedGif}
+              //   />
+              <></>
+            ) : expandedSection === "album" ? (
+              /* ========================================================
              DEDICATED FULL-SCREEN PHOTO GALLERY / ALBUM VIEW
              ======================================================== */
-            //   <PhotoGalleryPage
-            //     selectedEvent={selectedEvent}
-            //     setExpandedSection={setExpandedSection}
-            //     handlePhotoUpload={handlePhotoUpload}
-            //     setActivePhotoIndex={setActivePhotoIndex}
-            //     activePhotoIndex={activePhotoIndex}
-            //   />
-            <></>
-          ) : viewMode === "guest" ? (
-            /* ========================================================
+              //   <PhotoGalleryPage
+              //     selectedEvent={selectedEvent}
+              //     setExpandedSection={setExpandedSection}
+              //     handlePhotoUpload={handlePhotoUpload}
+              //     setActivePhotoIndex={setActivePhotoIndex}
+              //     activePhotoIndex={activePhotoIndex}
+              //   />
+              <></>
+            ) : viewMode === "guest" ? (
+              /* ========================================================
              GUEST PREVIEW: ZERO-INSTALL MOBILE-FIRST FLYER
              ======================================================== */
-            <GuestPreview
-              selectedEvent={selectedEvent}
-              rsvpName={rsvpName}
-              rsvpPhone={rsvpPhone}
-              handleRSVP={handleRSVP}
-              rsvpStatus={rsvpStatus}
-              setRsvpName={setRsvpName}
-              setRsvpPhone={setRsvpPhone}
-              setRsvpStatus={setRsvpStatus}
-              setExpandedSection={setExpandedSection}
-              // handleAddComment={handleAddComment}
-              newComment={newComment}
-              setNewComment={setNewComment}
-              setShowGifSelector={setShowGifSelector}
-              showGifSelector={showGifSelector}
-              setSelectedGif={setSelectedGif}
-              // handlePhotoUpload={handlePhotoUpload}
-              selectedGif={selectedGif}
-              getDaysRemaining={getDaysRemaining}
-            />
-          ) : (
-            /* ========================================================
+              <GuestPreview
+                selectedEvent={selectedEvent}
+                rsvpName={rsvpName}
+                rsvpPhone={rsvpPhone}
+                handleRSVP={handleRSVP}
+                rsvpStatus={rsvpStatus}
+                setRsvpName={setRsvpName}
+                setRsvpPhone={setRsvpPhone}
+                setRsvpStatus={setRsvpStatus}
+                setExpandedSection={setExpandedSection}
+                // handleAddComment={handleAddComment}
+                newComment={newComment}
+                setNewComment={setNewComment}
+                setShowGifSelector={setShowGifSelector}
+                showGifSelector={showGifSelector}
+                setSelectedGif={setSelectedGif}
+                // handlePhotoUpload={handlePhotoUpload}
+                selectedGif={selectedGif}
+                getDaysRemaining={getDaysRemaining}
+              />
+            ) : (
+              /* ========================================================
              ORGANIZER ADMIN VIEW (MANAGE GUEST LIST & WAITLIST)
              ======================================================== */
-            <OrganizerAdminView
-              selectedEvent={selectedEvent}
-              onUpdateEvent={onUpdateEvent}
-            />
-          )}
-        </AnimatePresence>
-      </motion.div>
+              <OrganizerAdminView
+                selectedEvent={selectedEvent}
+                onUpdateEvent={onUpdateEvent}
+              />
+            )}
+          </AnimatePresence>
+        </motion.div>
+      )}
     </>
   );
 }

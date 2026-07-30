@@ -11,7 +11,7 @@ services:
       - "traefik.http.routers.nextjs-app.rule=Host(`planora.didierdjakoua.site`)"
       - "traefik.http.routers.nextjs-app.entrypoints=websecure"
       - "traefik.http.routers.nextjs-app.tls=true"
-      - "traefik.http.services.nextjs-app.loadbalancer.server.port=3030"
+      - "traefik.http.services.nextjs-app.loadbalancer.server.port=3000"
     networks:
       - traefik_proxy
       - planora_network

@@ -22,6 +22,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+      <head>
+        {/* TEMPORARY: Prevent browser from aggressively blocking HTTP image elements */}
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:; img-src 'self' data: blob: https: http:;"
+        />
+      </head>
       <body
         suppressHydrationWarning
         className="bg-slate-50 text-slate-900 antialiased font-sans"

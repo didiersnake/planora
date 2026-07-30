@@ -155,15 +155,13 @@ export default function EventDetailsPage({
   };
   return (
     <ContentHolder>
-      {selectedEvent && (
-        <EventViewDetails
-          selectedEvent={selectedEvent}
-          events={events}
-          onBackToDashboard={() => router.push("/")}
-          onUpdateEvent={handleUpdateEvent}
-          initialSection={initialSection}
-        />
-      )}
+      <EventViewDetails
+        selectedEvent={selectedEvent}
+        events={events}
+        onBackToDashboard={() => router.push("/")}
+        onUpdateEvent={handleUpdateEvent}
+        initialSection={initialSection}
+      />
     </ContentHolder>
   );
 }

@@ -1,0 +1,23 @@
+services:
+  nextjs-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: planora-nextjs
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.http.routers.nextjs-app.rule=Host(`planora.didierdjakoua.site`)"
+      - "traefik.http.routers.nextjs-app.entrypoints=websecure"
+      - "traefik.http.routers.nextjs-app.tls=true"
+      - "traefik.http.services.nextjs-app.loadbalancer.server.port=3030"
+    networks:
+      - traefik_proxy
+      - planora_network
+
+networks:
+  traefik_proxy:
+    external: true
+  planora_network:
+    external: true

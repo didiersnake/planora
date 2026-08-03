@@ -121,7 +121,7 @@ export default function HomePage({
           id="dashboard_view"
         >
           {/* Elegant Promo Card */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
@@ -186,7 +186,7 @@ export default function HomePage({
                 </div>
               </div>
             </div>
-          </motion.div>
+          </motion.div> */}
 
           {/* Interactive Search Bar & Filters Section */}
           <section

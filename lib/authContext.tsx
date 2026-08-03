@@ -1,10 +1,12 @@
 import { UserSession } from "@/lib/Types";
 import React, { useEffect } from "react";
+import { Country } from "./Types";
 
 const AuthContext = React.createContext<{
   user: UserSession | null;
   setUser: (user: UserSession | null) => void;
-  countryCode: string;
+  country: Country | null;
+  setCountry: (country: Country | null) => void;
   showLoginModal: boolean;
   setShowLoginModal: (show: boolean) => void;
   isLoading: boolean;
@@ -20,7 +22,8 @@ const AuthContext = React.createContext<{
   setIsLoggedIn: () => {},
   isLoading: false,
   setIsLoading: () => {},
-  countryCode: "",
+  country: null,
+  setCountry: () => {},
 });
 
 export const useAuth = () => React.useContext(AuthContext);
@@ -36,7 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [showLoginModal, setShowLoginModal] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const countryCode = "cm";
+  const [country, setCountry] = React.useState<Country | null>(null);
 
   // useEffect(() => {
   //   if (user) {
@@ -49,9 +52,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthContext.Provider
       value={{
-        countryCode,
+        country,
         isLoading,
         setIsLoading,
+        setCountry,
         user,
         setUser,
         showLoginModal,

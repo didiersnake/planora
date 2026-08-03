@@ -123,20 +123,10 @@ export default function EventCreation({ onCreate, onCancel }: EventCreationProps
 
   const handlePublish = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTitle || !selectedLocation) return;
-
-    const locationDetails: LocationDetails = {
-      placeId: selectedLocation.place_id,
-      name: selectedLocation.name,
-      streetAddress: selectedLocation.street,
-      longitude: selectedLocation.long,
-      latitude: selectedLocation.lat,
-      stateCode: selectedLocation.state_code,
-      countryCode: selectedLocation.country_code,
-      county: selectedLocation.county,
-      city: selectedLocation.city,
-      state: selectedLocation.state,
-    };
+    if (!newTitle || !selectedLocation) {
+      console.log(" New title or location can't be empty");
+      return;
+    }
 
     const coverObject = extractObjectKey(newCover);
     const request = new FormData();

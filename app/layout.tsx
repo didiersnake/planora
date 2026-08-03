@@ -14,7 +14,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "NEXORA - Social Event Planner and Manager",
+  title: "Planora - Social Event Planner and Manager",
   description:
     "Design, customize, and share vibrant social events with templates, custom event covers, waitlists, and regional payment options.",
 };

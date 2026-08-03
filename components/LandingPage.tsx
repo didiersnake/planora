@@ -38,8 +38,8 @@ export default function LandingPage({ onExploreEvents, onPlanEvent }: LandingPag
 
         <div className="space-y-6 z-10 max-w-2xl">
           <div className="inline-flex items-center gap-2 bg-orange-500/10 text-orange-400 text-xs font-semibold px-4 py-1.5 rounded-full border border-orange-500/20">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>The No-Install Pan-African Social Vibe Maker</span>
+            {/* <Sparkles className="w-3.5 h-3.5" /> */}
+            <span>Start Here, Meet Everywhere</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display leading-tight tracking-tight">
@@ -50,10 +50,9 @@ export default function LandingPage({ onExploreEvents, onPlanEvent }: LandingPag
           </h1>
 
           <p className="text-slate-300 text-sm md:text-base max-w-lg leading-relaxed">
-            Create beautiful, high-converting social gathering flyers. Invite friends
-            instantly via a single WhatsApp link. Share memories, coordinate food, manage
-            waitlists, and collect mobile money in your regional currency (FCFA, KES, GHS,
-            ZAR)—all with absolute zero app installs.
+            Create beautiful gathering pages in seconds. Invite friends instantly via a
+            single link. Share memories, manage guestlists, and collect payments in your
+            regional currency. No app install required.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
@@ -82,7 +81,7 @@ export default function LandingPage({ onExploreEvents, onPlanEvent }: LandingPag
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle className="w-4 h-4 text-orange-500" />
-              <span>Instant Wave, MTN, Orange, M-Pesa & Card Payments</span>
+              <span>Instant Mobile Payment</span>
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle className="w-4 h-4 text-orange-500" />
@@ -151,7 +150,7 @@ export default function LandingPage({ onExploreEvents, onPlanEvent }: LandingPag
       <section className="space-y-8" id="landing_features">
         <div className="text-center max-w-xl mx-auto space-y-3">
           <h2 className="text-2xl md:text-3xl font-extrabold font-display text-slate-900 tracking-tight">
-            Crafted for Unforgettable African Gatherings
+            Crafted for Unforgettable Gatherings
           </h2>
           <p className="text-xs md:text-sm text-slate-500">
             No friction, no downloads, just seamless connections from the moment you share
@@ -172,9 +171,8 @@ export default function LandingPage({ onExploreEvents, onPlanEvent }: LandingPag
               Zero-Install Mobile Flyer
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Your invitees land on a high-speed, beautifully optimized flyer page
-              directly inside their WhatsApp or Instagram browser. They RSVP, pay, and
-              chat in under 30 seconds.
+              Your invitees access a beautifully optimized flyer page directly via a link.
+              They RSVP, pay, and chat in under 30 seconds.
             </p>
           </div>
 
@@ -188,9 +186,8 @@ export default function LandingPage({ onExploreEvents, onPlanEvent }: LandingPag
             </div>
             <h3 className="font-bold text-slate-900 text-lg">Native Mobile Money</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Direct integration for Wave, Orange, MTN, M-Pesa, Vodafone & Card. Collect
-              advance payments securely, manage tickets, or specify pay-at-the-door and
-              free events with ease.
+              Accept payments in your local currency. Collect advance payments securely,
+              manage tickets, or specify pay-at-entrance and free events with ease.
             </p>
           </div>
 
@@ -206,9 +203,8 @@ export default function LandingPage({ onExploreEvents, onPlanEvent }: LandingPag
               Smart Capacity & Waitlist
             </h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Never worry about food running out or crowded villas. Set an automatic
-              capacity limit. Once full, the waitlist queue opens up automatically and
-              promotes guests if spots clear.
+              Set an automatic capacity limit. Once full, the waitlist queue opens up
+              automatically and promotes guests if spots clear.
             </p>
           </div>
         </div>
@@ -234,15 +230,15 @@ export default function LandingPage({ onExploreEvents, onPlanEvent }: LandingPag
           </p>
           <div className="flex flex-wrap gap-4 pt-2">
             <div className="bg-white px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-              <Users className="w-4 h-4 text-orange-600" />
+              {/* <Users className="w-4 h-4 text-orange-600" /> */}
               <span>Visible Guest List</span>
             </div>
             <div className="bg-white px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-              <Share2 className="w-4 h-4 text-orange-600" />
+              {/* <Share2 className="w-4 h-4 text-orange-600" /> */}
               <span>Interactive Event Wall</span>
             </div>
             <div className="bg-white px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-orange-600" />
+              {/* <Sparkles className="w-4 h-4 text-orange-600" /> */}
               <span>Shared Collaborative Album</span>
             </div>
           </div>

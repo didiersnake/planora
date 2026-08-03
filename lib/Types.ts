@@ -15,6 +15,15 @@ export interface Comment {
   timestamp: string;
 }
 
+export interface Country {
+  code: string;
+  name: string;
+  currency_name: string;
+  currency_code: string;
+  currency_symbol: string;
+  flag: string;
+}
+
 export interface Category {
   id?: number | string;
   name: string;

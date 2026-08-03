@@ -51,4 +51,14 @@ export const eventService = {
       throw error;
     }
   },
+
+  async getCountries(): Promise<any> {
+    try {
+      const response = await apiClient.get<any>("/countries");
+      return response;
+    } catch (error) {
+      console.error("Failed to fetch countries:", error);
+      throw error;
+    }
+  },
 };

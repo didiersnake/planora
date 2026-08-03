@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
-// export const baseUrl = "http://localhost:8484/api";
+// export const baseUrl = "http://localhost:8888/api";
 export const baseUrl = "https://planorabackend.didierdjakoua.site/api";
 const api: AxiosInstance = axios.create({
   baseURL: baseUrl,

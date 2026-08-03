@@ -10,9 +10,12 @@ import {
   Globe,
   Twitter,
   Instagram,
+  Check,
   Facebook,
 } from "lucide-react";
 import { useAuth } from "@/lib/authContext";
+import { eventService } from "@/lib/services/eventService";
+import { Country } from "@/lib/Types";
 
 interface UserSession {
   name: string;
@@ -23,7 +26,11 @@ interface UserSession {
 const Navbar = () => {
   const router = useRouter();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
-  const { user, setUser, setShowLoginModal, isLoggedIn } = useAuth();
+  const { user, setUser, setShowLoginModal, isLoggedIn, country, setCountry } = useAuth();
+  const [countries, setCountries] = useState<Country[]>([]); // State to hold the list of countries
+
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  const countryDropdownRef = useRef<HTMLDivElement>(null);
 
   // Dropdown reference to handle clicking outside
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -34,11 +41,40 @@ const Navbar = () => {
     setShowUserDropdown(false);
   };
 
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await eventService.getCountries();
+        return response;
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+
+    fetchCountries().then((countries) => {
+      if (countries && countries.length > 0) {
+        const defaultCountry = countries.find(
+          (country: Country) => country.code.toLowerCase() === "ci",
+        );
+        if (defaultCountry) {
+          setCountry(defaultCountry);
+          setCountries(countries);
+        }
+      }
+    });
+  }, [setCountry, setCountries]);
+
   // Close dropdown on click outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setShowUserDropdown(false);
+      }
+      if (
+        countryDropdownRef.current &&
+        !countryDropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowCountryDropdown(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -127,6 +163,72 @@ const Navbar = () => {
               </a>
             </div>
 
+            {/* Country Dropdown for local context (flag + name) */}
+            <div
+              className="relative"
+              ref={countryDropdownRef}
+              id="navbar_country_dropdown"
+            >
+              <button
+                onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-50 hover:bg-neutral-100 text-neutral-800 border border-neutral-200 rounded-full font-bold text-xs transition-all cursor-pointer select-none"
+                id="country_dropdown_trigger"
+              >
+                <span className="text-sm leading-none flex-shrink-0">
+                  {country ? country.flag : "🌍"}
+                </span>
+                <span className="max-w-[110px] truncate hidden sm:inline-block font-sans text-[11px] font-semibold text-neutral-700">
+                  {country ? country.name : "Global"}
+                </span>
+                <ChevronDown className="w-3.5 h-3.5 text-neutral-500" />
+              </button>
+
+              <AnimatePresence>
+                {showCountryDropdown && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute right-0 mt-2 w-56 bg-white border border-neutral-200 rounded-2xl shadow-xl py-2 z-50 text-xs overflow-hidden"
+                    id="country_dropdown_menu"
+                  >
+                    <div className="border-t border-neutral-100 my-1"></div>
+
+                    <div className="max-h-60 overflow-y-auto">
+                      {countries.map((countryItem: Country) => {
+                        const isSelected = country?.code === countryItem.code;
+                        return (
+                          <button
+                            key={countryItem.code}
+                            onClick={() => {
+                              setCountry(countryItem);
+                              setShowCountryDropdown(false);
+                            }}
+                            className={`w-full text-left px-3.5 py-2.5 hover:bg-slate-50 font-semibold flex items-center justify-between transition ${
+                              isSelected
+                                ? "text-orange-600 bg-orange-50/50 font-bold"
+                                : "text-neutral-700"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm leading-none">
+                                {countryItem.flag}
+                              </span>
+                              <span className="truncate">{countryItem.name}</span>
+                            </div>
+                            {isSelected && (
+                              <Check className="w-3.5 h-3.5 text-orange-600" />
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             {/* Simulated Sign In & User Shortcut Dropdown */}
             <div className="relative" ref={dropdownRef} id="navbar_auth_section">
               {isLoggedIn && user ? (
@@ -210,7 +312,7 @@ const Navbar = () => {
                 /* Simulated login triggers */
                 <button
                   onClick={() => setShowLoginModal(true)}
-                  className="text-xs font-bold text-neutral-700 hover:text-orange-600 border border-slate-300 hover:border-orange-500 rounded-full px-4 py-2 transition"
+                  className="text-xs font-bold text-neutral-700 hidden md:inline-block hover:text-orange-600 border border-slate-300 hover:border-orange-500 rounded-md px-4 py-2 transition"
                   id="sign_in_trigger"
                 >
                   Sign In
@@ -221,7 +323,7 @@ const Navbar = () => {
             {/* Main Plan an Event Action Button */}
             <button
               onClick={() => router.push("/events/create")}
-              className="px-4 sm:px-5 py-2 bg-orange-600 text-white font-semibold rounded-full hover:bg-orange-700 transition-all duration-200 text-xs sm:text-sm flex items-center gap-1.5 shadow-lg shadow-orange-100"
+              className="px-4 sm:px-5 py-2 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-700 transition-all duration-200 text-xs sm:text-sm flex items-center gap-1.5 shadow-lg shadow-orange-100"
               id="plan_event_btn"
             >
               <Plus className="w-3.5 h-3.5" />

@@ -40,7 +40,7 @@ export default function EventGeolocation({
     long: number;
   }>({ lat: 3.8943, long: 11.5433 });
 
-  const { countryCode } = useAuth();
+  const { country } = useAuth();
 
   const apiKey = "7bb8642466d54dc1b41a16f7fb9bf4b6";
 
@@ -142,6 +142,11 @@ export default function EventGeolocation({
     setNewLocationName(val);
     setUrlParseError("");
 
+    if (val.trim().length < 1) {
+      setIsResolvingUrl(false);
+      return;
+    }
+
     if (val.startsWith("http") || val.includes("maps.")) {
       handleLocationUrlAndTextParse(val);
       return;
@@ -181,23 +186,26 @@ export default function EventGeolocation({
       });
   };
 
-  const getLocationPredictions = useCallback((val: string) => {
-    // const apiKey = "7bb8642466d54dc1b41a16f7fb9bf4b6";
-    const baseUrl = "https://api.geoapify.com/v1/geocode/autocomplete";
-    const url = `${baseUrl}?text=${val}&format=json&limit=5&filter=auto&bias=auto&apiKey=${apiKey}`;
-    // Call the Geoapify API
-    externalApiClient
-      .get(url)
-      .then((response: any) => {
-        const predictions = response.results;
-        console.log(response);
-        setPredictions(predictions);
-        setShowPredictionsDropdown(true);
-      })
-      .catch((error: any) => {
-        console.error("Error fetching predictions:", error);
-      });
-  }, []);
+  const getLocationPredictions = useCallback(
+    (val: string) => {
+      const countryCode = country?.code.toLocaleLowerCase() || "auto";
+      const baseUrl = "https://api.geoapify.com/v1/geocode/autocomplete";
+      const url = `${baseUrl}?text=${val}&format=json&limit=5&filter=${countryCode}&bias=${countryCode}&apiKey=${apiKey}`;
+      // Call the Geoapify API
+      externalApiClient
+        .get(url)
+        .then((response: any) => {
+          const predictions = response.results;
+          console.log(response);
+          setPredictions(predictions);
+          setShowPredictionsDropdown(true);
+        })
+        .catch((error: any) => {
+          console.error("Error fetching predictions:", error);
+        });
+    },
+    [country],
+  );
 
   const debouncedLocationQuery = useCallback(
     (val: string) => {
@@ -252,7 +260,6 @@ export default function EventGeolocation({
         L.tileLayer(isRetina ? retinaUrl : baseUrl, {
           attribution:
             'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | <a href="https://openmaptiles.org/" rel="nofollow" target="_blank">© OpenMapTiles</a> <a href="https://www.openstreetmap.org/copyright" rel="nofollow" target="_blank">© OpenStreetMap</a> contributors',
-          // apiKey: myAPIKey,
           maxZoom: 20,
           id: "osm-bright",
         }).addTo(map);

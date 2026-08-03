@@ -36,9 +36,9 @@ export default function EventPaymentAndCapacity({
             </label>
             <div className="grid grid-cols-3 gap-2">
               {[
-                { id: "Free", label: "🎁 Free Admission" },
-                { id: "Cash_at_event", label: "🚪 Pay at the Door" },
-                { id: "Mobile_payment", label: "📱 Mobile Money" },
+                { id: "Free", label: " Free Admission" },
+                { id: "Cash_at_event", label: " Pay at Entrance" },
+                { id: "Mobile_payment", label: " Mobile Money" },
               ].map((opt) => (
                 <button
                   key={opt.id}
@@ -61,13 +61,10 @@ export default function EventPaymentAndCapacity({
           </div>
 
           {/* Mobile Money Details Panel */}
-          {newMonetization === "momo" && (
+          {newMonetization === "Mobile_payment" && (
             <div className="animate-[fadeIn_0.8s_ease-in-out] bg-neutral-50 border border-neutral-200 rounded-2xl p-4 space-y-3">
               <h5 className="text-xs font-bold text-neutral-800">
-                Configure Payout Account (
-                {AFRICAN_REGIONS.find((r) => r.id === newRegion)?.operators.join(" / ") ||
-                  "Wave / MTN / Orange"}
-                )
+                Configure Payout Account Details
               </h5>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="space-y-1">
